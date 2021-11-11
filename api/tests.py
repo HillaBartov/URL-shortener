@@ -15,6 +15,13 @@ class URLListViewTest(TestCase):
         )
         url.save()
 
+    def test_view_create_short_url(self):
+        data = {
+            'url': 'https://www.pcentra.com/'
+        }
+        response = self.client.post(reverse("create"), data)
+        self.assertEqual(response.status_code, 201)
+
     def test_view_url_exists_for_created_short(self):
         url = get_object_or_404(URL, url='https://www.pcentra.com/')
         response = self.client.get(reverse("short", args=(url.slug,)))
